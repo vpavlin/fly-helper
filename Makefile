@@ -9,3 +9,5 @@ clean:
 build:
 	go build -o $(TARGET) $(LDFLAGS) main.go
 
+install:
+	cp $(TARGET) ${GOPATH}/bin/

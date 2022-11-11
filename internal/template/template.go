@@ -11,16 +11,7 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-func (t TemplateEntry) LoadTemplateFile() (string, error) {
-	data, err := ioutil.ReadFile(t.Template)
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
-}
-
-func (t TemplateEntry) LoadValuesFile() (map[string]interface{}, error) {
+func (t Template) LoadValuesFile() (map[string]interface{}, error) {
 	var values map[string]interface{}
 	data, err := ioutil.ReadFile(t.Values)
 	if err != nil {
@@ -40,12 +31,17 @@ func (t TemplateEntry) LoadValuesFile() (map[string]interface{}, error) {
 	return values, nil
 }
 
-func (t TemplateEntry) Execute(wr io.Writer) error {
-	tmpltContent, err := t.LoadTemplateFile()
+func (t TemplateEntry) LoadTemplateFile() (string, error) {
+	data, err := ioutil.ReadFile(t.Template)
 	if err != nil {
-		return err
+		return "", err
 	}
-	values, err := t.LoadValuesFile()
+
+	return string(data), nil
+}
+
+func (t TemplateEntry) Execute(wr io.Writer, values map[string]interface{}) error {
+	tmpltContent, err := t.LoadTemplateFile()
 	if err != nil {
 		return err
 	}
@@ -63,7 +59,7 @@ func (t TemplateEntry) Execute(wr io.Writer) error {
 	return nil
 }
 
-func (t TemplateEntry) WriteToFile() error {
+func (t TemplateEntry) WriteToFile(values map[string]interface{}) error {
 	f, err := os.Create(t.Output)
 	if err != nil {
 		return err
@@ -71,7 +67,7 @@ func (t TemplateEntry) WriteToFile() error {
 
 	defer f.Close()
 
-	err = t.Execute(f)
+	err = t.Execute(f, values)
 	if err != nil {
 		return err
 	}

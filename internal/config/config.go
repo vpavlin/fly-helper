@@ -23,7 +23,7 @@ const DEFAULT_CONFIG_ENV_NAME = "FLY_HELPER_CONFG_ENV"
 type Config struct {
 	AppName   string `json:"appName" yaml:"appNAme"`
 	Secrets   secrets.Secrets
-	Templates []template.TemplateEntry
+	Templates template.Template
 }
 
 func NewConfigFromCommand(cmd *cobra.Command) (*Config, error) {

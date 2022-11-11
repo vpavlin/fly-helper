@@ -1,15 +1,21 @@
 package config
 
 import (
+	"context"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
 
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
+	"github.com/superfly/flyctl/client"
+	"github.com/vpavlin/fly-helper/internal/fly"
 	"github.com/vpavlin/fly-helper/internal/secrets"
 )
+
+const DEFAULT_CONFIG_ENV_NAME = "FLY_HELPER_CONFG_ENV"
 
 type Config struct {
 	AppName string
@@ -61,5 +67,42 @@ func NewConfig(data []byte) (*Config, error) {
 	var config Config
 	err := json.Unmarshal(data, &config)
 
+	if len(config.AppName) == 0 {
+		flytoml, err := fly.NewFlyToml("./fly.toml")
+		if err != nil {
+			return nil, err
+		}
+
+		config.AppName = flytoml.App
+		logrus.Infof("Using App name '%s' from fly.toml", config.AppName)
+	}
+
 	return &config, err
+}
+
+func (c Config) ToEnv() (string, string, error) {
+	data, err := json.Marshal(c)
+	if err != nil {
+		return "", "", err
+	}
+
+	content := base64.StdEncoding.EncodeToString(data)
+
+	return DEFAULT_CONFIG_ENV_NAME, content, nil
+}
+
+func (c Config) Push(fly *client.Client) error {
+	name, content, err := c.ToEnv()
+	if err != nil {
+		return err
+	}
+
+	secretMap := map[string]string{
+		name: content,
+	}
+
+	logrus.Infof("Pushing flyhelper config for app %s into %s", c.AppName, name)
+
+	_, err = fly.API().SetSecrets(context.Background(), c.AppName, secretMap)
+	return err
 }

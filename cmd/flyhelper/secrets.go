@@ -39,13 +39,23 @@ var pushCmd = &cobra.Command{
 
 		fly := fly.NewFly()
 
+		err = config.Push(fly)
+		if err != nil {
+			if secrets.IsUnchangedErr(err) {
+				log.Println(err)
+			} else {
+				log.Fatalln(err)
+			}
+		}
+
 		err = config.Secrets.Push(fly, config.AppName)
 		if err != nil {
 			if secrets.IsUnchangedErr(err) {
 				log.Println(err)
-				return
+
+			} else {
+				log.Fatalln(err)
 			}
-			log.Fatalln(err)
 		}
 	},
 }

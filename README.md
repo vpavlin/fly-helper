@@ -50,3 +50,4 @@ flyhelper secrets pull
 
 The `Name` values are used to produce secrets names e.g. `my important secret file` will turn into `FLY_SECRET_MY_IMPORTANT_SECRET_FILE`. The content of the file on `Path` will be base64 encoded an used as the value of the secret.
 
+The tool will also upload the `config.json` into the secrets as `FLY_HELPER_CONFG_ENV`. This is then used by the `flyhelper` inside the app image to export the secrets to filesystem.

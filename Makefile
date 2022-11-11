@@ -1,4 +1,4 @@
-VERSION := "v0.0.1"
+VERSION := "v0.0.2"
 TARGET=_build/flyhelper
 PKG=$(shell go list)
 LDFLAGS=-ldflags "-X '$(PKG)/cmd/flyhelper.version=$(VERSION)'"

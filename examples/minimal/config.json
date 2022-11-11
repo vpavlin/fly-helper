@@ -1,0 +1,16 @@
+{
+    "Secrets": {
+        "Input": [
+            {
+                "Name": "My Secret File",
+                "Path": "./secret.txt"
+            }
+        ],
+        "Output": [
+            {
+                "Name": "My Secret File",
+                "Path": "/opt/flyhelper/data/secret.hello.txt"
+            }
+        ]
+    }
+}

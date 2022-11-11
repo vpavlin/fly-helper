@@ -3,8 +3,11 @@ module github.com/vpavlin/fly-helper
 go 1.18
 
 require (
+	github.com/pelletier/go-toml v1.9.4
+	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.6.1
 	github.com/superfly/flyctl v0.0.427
+	github.com/superfly/graphql v0.2.3
 
 )
 
@@ -32,7 +35,6 @@ require (
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/muesli/termenv v0.7.4 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
-	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/spf13/afero v1.6.0 // indirect
@@ -42,7 +44,6 @@ require (
 	github.com/spf13/viper v1.8.1 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
 	github.com/superfly/flyctl/api v0.0.0-20221109153730-1c50dde1251a // indirect
-	github.com/superfly/graphql v0.2.3 // indirect
 	github.com/vektah/gqlparser/v2 v2.4.5 // indirect
 	golang.org/x/net v0.0.0-20220706163947-c90051bbdb60 // indirect
 	golang.org/x/sys v0.0.0-20220928140112-f11e5e49a4ec // indirect

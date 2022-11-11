@@ -1,6 +1,4 @@
-# fly.toml file generated for example-1 on 2022-11-11T10:02:04+01:00
-
-app = "example-1"
+app = "xyz"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []

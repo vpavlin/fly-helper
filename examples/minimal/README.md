@@ -4,7 +4,7 @@
 1. Launch your Fly App
 
     ```
-    flyctl launch
+    flyctl launch --copy-config --name "my-awesome-application-$RANDOM"
     ```
 
 1. Upload the secrets
@@ -32,5 +32,5 @@
    flyhelper secrets push
    ```
 
-    You should see updated content served once the deployment is finished.
+   You should see updated content served once the deployment is finished.
 

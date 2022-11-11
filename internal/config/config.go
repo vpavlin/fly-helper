@@ -1,6 +1,7 @@
 package config
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
 	"encoding/json"
@@ -13,12 +14,13 @@ import (
 	"github.com/superfly/flyctl/client"
 	"github.com/vpavlin/fly-helper/internal/fly"
 	"github.com/vpavlin/fly-helper/internal/secrets"
+	yaml "gopkg.in/yaml.v3"
 )
 
 const DEFAULT_CONFIG_ENV_NAME = "FLY_HELPER_CONFG_ENV"
 
 type Config struct {
-	AppName string
+	AppName string `json:"appName" yaml:"appNAme"`
 	Secrets secrets.Secrets
 }
 
@@ -65,7 +67,17 @@ func NewConfigFromFile(path string) (*Config, error) {
 
 func NewConfig(data []byte) (*Config, error) {
 	var config Config
-	err := json.Unmarshal(data, &config)
+	var err error
+
+	if bytes.HasPrefix(data, []byte("{")) {
+		err = json.Unmarshal(data, &config)
+	} else {
+		err = yaml.Unmarshal(data, &config)
+	}
+
+	if err != nil {
+		return nil, err
+	}
 
 	if len(config.AppName) == 0 {
 		flytoml, err := fly.NewFlyToml("./fly.toml")

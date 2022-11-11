@@ -4,28 +4,45 @@ A minimalistic tool helping with deployment to Fly.io
 
 ## Config
 
+This tool supports configuration in YAML or JSON
+
+
+```
+---
+secrets:
+  input:
+  - name: my important secret file
+    path: "/tmp/my-file.txt"
+  - name: client-cert
+    path: "./client.crt"
+  output:
+  - name: my important secret file
+    path: "/mnt/something.txt"
+  - name: client-cert
+    path: "/opt/client.crt"
+```
+
 ```
 {
-    "AppName": "some-app",
-    "Secrets": {
-        "Input": [
+    "secrets": {
+        "input": [
             {
-                "Name": "my important secret file",
-                "Path": "/tmp/my-file.txt"
+                "name": "my important secret file",
+                "path": "/tmp/my-file.txt"
             },
             {
-                "Name": "client-cert",
-                "Path": "./client.crt"
+                "name": "client-cert",
+                "path": "./client.crt"
             }
         ],
-        "Output": [
+        "output": [
             {
-                "Name": "my important secret file",
-                "Path": "/mnt/something.txt"
+                "name": "my important secret file",
+                "path": "/mnt/something.txt"
             },
             {
-                "Name": "client-cert",
-                "Path": "/opt/client.crt"
+                "name": "client-cert",
+                "path": "/opt/client.crt"
             }
         ]
     }

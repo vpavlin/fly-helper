@@ -8,6 +8,7 @@ require (
 	github.com/spf13/cobra v1.6.1
 	github.com/superfly/flyctl v0.0.427
 	github.com/superfly/graphql v0.2.3
+	gopkg.in/yaml.v3 v3.0.1
 
 )
 

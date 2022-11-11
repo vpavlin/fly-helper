@@ -35,8 +35,6 @@ var executeCmd = &cobra.Command{
 			log.Fatalln(err)
 		}
 
-		logrus.Infof("%v", values)
-
 		for _, t := range config.Templates.Items {
 			logrus.Infof("Processing %s, output to %s", t.Template, t.Output)
 			err = t.WriteToFile(values)

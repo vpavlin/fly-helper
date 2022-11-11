@@ -14,14 +14,16 @@ import (
 	"github.com/superfly/flyctl/client"
 	"github.com/vpavlin/fly-helper/internal/fly"
 	"github.com/vpavlin/fly-helper/internal/secrets"
+	"github.com/vpavlin/fly-helper/internal/template"
 	yaml "gopkg.in/yaml.v3"
 )
 
 const DEFAULT_CONFIG_ENV_NAME = "FLY_HELPER_CONFG_ENV"
 
 type Config struct {
-	AppName string `json:"appName" yaml:"appNAme"`
-	Secrets secrets.Secrets
+	AppName   string `json:"appName" yaml:"appNAme"`
+	Secrets   secrets.Secrets
+	Templates []template.TemplateEntry
 }
 
 func NewConfigFromCommand(cmd *cobra.Command) (*Config, error) {
